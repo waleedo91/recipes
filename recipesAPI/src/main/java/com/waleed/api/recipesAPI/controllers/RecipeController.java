@@ -1,8 +1,9 @@
 package com.waleed.api.recipesAPI.controllers;
 
 import com.waleed.api.recipesAPI.models.Recipes;
+import com.waleed.api.recipesAPI.repository.RecipeRepository;
 import com.waleed.api.recipesAPI.service.RecipeService;
-import org.bson.types.ObjectId;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
+    
 
     @GetMapping
     public ResponseEntity<List<Recipes>> allRecipes(){
@@ -25,8 +27,14 @@ public class RecipeController {
     }
 
     @GetMapping("/{recipeId}")
-    public ResponseEntity<Optional<Recipes>> getRecipeById(@PathVariable String recipeId){
-        return new ResponseEntity<Optional<Recipes>>(recipeService.recipeById(recipeId), HttpStatus.OK);
+    public ResponseEntity<Recipes> getRecipeById(@PathVariable String recipeId){
+        return new ResponseEntity<Recipes>(recipeService.recipeById(recipeId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{recipeId}")
+    public ResponseEntity<String> deleteRecipe(@PathVariable String recipeId){
+        recipeService.deleteById(recipeId);
+        return new ResponseEntity<>("Recipe has been deleted", HttpStatus.OK);
     }
 
 }

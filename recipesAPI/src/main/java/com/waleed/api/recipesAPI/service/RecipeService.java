@@ -2,7 +2,6 @@ package com.waleed.api.recipesAPI.service;
 
 import com.waleed.api.recipesAPI.models.Recipes;
 import com.waleed.api.recipesAPI.repository.RecipeRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,13 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-
-    public Optional<Recipes> recipeById(String recipeId){
+    public Recipes recipeById(String recipeId){
         return recipeRepository.findRecipeByRecipeId(recipeId);
+    }
+
+    public void deleteById(String recipeId) {
+        Recipes recipe = recipeRepository.findRecipeByRecipeId(recipeId);
+        recipeRepository.delete(recipe);
     }
 
 }

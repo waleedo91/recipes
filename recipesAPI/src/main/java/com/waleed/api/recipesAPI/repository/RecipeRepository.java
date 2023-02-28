@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RecipeRepository extends MongoRepository<Recipes, ObjectId> {
-    Optional<Recipes> findRecipeByRecipeId(String recipeId);
-
+public interface RecipeRepository extends MongoRepository<Recipes, String> {
+    public Recipes findRecipeByRecipeId(String recipeId);
 }
