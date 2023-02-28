@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,6 +25,11 @@ public class CommentController {
                         payload.get("commentBody"),
                         payload.get("recipeId")),
                 HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Comments>> allComments() {
+        return new ResponseEntity<List<Comments>>(commentService.allComments(), HttpStatus.OK);
     }
 
 }

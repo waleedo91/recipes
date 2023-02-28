@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.xml.stream.events.Comment;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -30,4 +31,9 @@ public class CommentService {
 
         return comment;
     }
+
+    public List<Comments> allComments(){
+        return commentRepository.findAll();
+    }
+
 }

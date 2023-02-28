@@ -1,16 +1,13 @@
 package com.waleed.api.recipesAPI.controllers;
 
 import com.waleed.api.recipesAPI.models.Recipes;
-import com.waleed.api.recipesAPI.repository.RecipeRepository;
 import com.waleed.api.recipesAPI.service.RecipeService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,7 +16,12 @@ public class RecipeController {
 
     @Autowired
     private RecipeService recipeService;
-    
+
+    @PostMapping
+    public ResponseEntity<Recipes> createRecipe(@RequestBody Recipes recipes){
+        Recipes createRecipe = recipeService.createRecipe(recipes);
+        return new ResponseEntity<Recipes>(recipeService.createRecipe(recipes), HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<List<Recipes>> allRecipes(){
@@ -30,6 +32,7 @@ public class RecipeController {
     public ResponseEntity<Recipes> getRecipeById(@PathVariable String recipeId){
         return new ResponseEntity<Recipes>(recipeService.recipeById(recipeId), HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{recipeId}")
     public ResponseEntity<String> deleteRecipe(@PathVariable String recipeId){
