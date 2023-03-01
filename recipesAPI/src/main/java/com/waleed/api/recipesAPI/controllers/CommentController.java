@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,27 @@ public class CommentController {
                 HttpStatus.CREATED);
     }
 
+    @PutMapping("/{commentId}")
+    public ResponseEntity<Comments> updateComment(@RequestBody Comments comment,
+                                                  @PathVariable("commentId") String commentId){
+        commentService.updateComment(commentId);
+        return new ResponseEntity<Comments>(comment, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<Comments>> allComments() {
         return new ResponseEntity<List<Comments>>(commentService.allComments(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{commentId}")
+    public ResponseEntity<Comments> getCommentById(@PathVariable String commentId){
+        return ResponseEntity.ok(commentService.getCommentById(commentId));
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable String commentId){
+        commentService.deleteCommentById(commentId);
+        return new ResponseEntity<>("Comment Deleted", HttpStatus.OK);
     }
 
 }

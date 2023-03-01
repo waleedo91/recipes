@@ -21,6 +21,7 @@ public class CommentService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    // POST COMMENT
     public Comments postComment(String commentTitle, String commentBody, String recipeId){
 
         Comments comment = commentRepository.insert(new Comments(commentTitle, commentBody));
@@ -32,8 +33,38 @@ public class CommentService {
         return comment;
     }
 
+
+    // GET ALL COMMENTS
     public List<Comments> allComments(){
         return commentRepository.findAll();
+    }
+
+    // GET COMMENT BY ID
+    public Comments getCommentById(String commentId){
+        return commentRepository.findById(commentId)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                String.format("Could not find Comment with ID: %s", commentId)
+                        ));
+    }
+
+    // UPDATE COMMENT
+    public void updateComment(String commentId){
+        Comments comment = commentRepository.findById(commentId)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                String.format("Could not find Comment with ID: %s", commentId)
+                ));
+    }
+
+    // DELETE COMMENT
+    public void deleteCommentById(String commentId){
+        Comments comment = commentRepository.findById(commentId)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                String.format("Could not find Comment with ID %s", commentId)));
+
+        commentRepository.delete(comment);
     }
 
 }

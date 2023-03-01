@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Comments {
     @Id
-    private String id;
+    private String commentId;
     private String title;
     private String body;
 
